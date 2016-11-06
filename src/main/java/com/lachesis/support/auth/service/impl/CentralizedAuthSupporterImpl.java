@@ -83,7 +83,12 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 			return null;
 		}
 		
-		return null;
+		UserDetails userDetails = authenticationProvider.getAuthenticater().authenticateWithAuthToken(authToken);
+		if(userDetails == null){
+			LOG.warn(String.format("authenticating failed for [token:%s,ip:%s]", token,terminalIpAddress));
+			return null;
+		}
+		return userDetails;
 	}
 
 }

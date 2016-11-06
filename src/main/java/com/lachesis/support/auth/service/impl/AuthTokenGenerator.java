@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.lachesis.support.auth.model.AuthToken;
 
-public class AuthTokenGenerator {
+class AuthTokenGenerator {
 	private String userid;
 	private String password;
 	private String terminalIpAddress;

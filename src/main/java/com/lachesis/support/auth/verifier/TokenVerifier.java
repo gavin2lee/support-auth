@@ -4,5 +4,4 @@ import com.lachesis.support.auth.model.AuthToken;
 
 public interface TokenVerifier {
 	AuthToken verify(String token, String terminalIpAddress);
-	
 }

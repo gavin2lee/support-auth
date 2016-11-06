@@ -7,33 +7,55 @@
 	<groupId>com.lachesis.support</groupId>
 	<packaging>jar</packaging>
 	<version>0.01</version>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		
+
 		<dependency>
-	  		<groupId>org.apache.commons</groupId>
-	  		<artifactId>commons-lang3</artifactId>
-	  		<version>${commons.lang3.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3.version}</version>
 		</dependency>
-		
+
 		<dependency>
-	    <groupId>net.sf.ehcache</groupId>
-	    <artifactId>ehcache</artifactId>
-	    <version>${ehcache.version}</version>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${ehcache.version}</version>
 		</dependency>
 	</dependencies>
-	
-	
-	
+
+
+
 	<properties>
 		<slf4j.version>1.7.13</slf4j.version>
 		<commons.lang3.version>3.4</commons.lang3.version>
 		<ehcache.version>2.10.1</ehcache.version>
 	</properties>
-	
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
