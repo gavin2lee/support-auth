@@ -4,19 +4,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.lachesis.support.auth.authenticater.Authenticater;
-import com.lachesis.support.auth.encrypter.DefaultEncrypter;
 import com.lachesis.support.auth.model.AuthToken;
 import com.lachesis.support.auth.model.Credential;
 import com.lachesis.support.auth.model.UserDetails;
+import com.lachesis.support.auth.provider.AuthenticationProvider;
+import com.lachesis.support.auth.provider.EncryptionProvider;
 import com.lachesis.support.auth.service.CentralizedAuthSupporter;
 import com.lachesis.support.auth.token.TokenHolder;
 import com.lachesis.support.auth.verifier.TokenVerifier;
 
 public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 	private static final Logger LOG = LoggerFactory.getLogger(CentralizedAuthSupporterImpl.class);
-	private Authenticater authenticater;
-	private DefaultEncrypter encrypter;
+	private AuthenticationProvider authenticationProvider;
+	private EncryptionProvider encryptionProvider;
 	
 	private TokenHolder tokenHolder;
 	
@@ -53,14 +53,14 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 
 	private String doGenerateToken(String userid, String password, String terminalIpAddress) {
 		Credential credential = new Credential(userid, password);
-		UserDetails userDetails = authenticater.authenticateWithCredential(credential);
+		UserDetails userDetails = authenticationProvider.getAuthenticater().authenticateWithCredential(credential);
 		if (userDetails == null) {
 			LOG.debug(String.format("failed to authenticate [userid:%s]", userid));
 			return null;
 		}
 
 		String plainTokenValue = assemblePlainTokenValue(userDetails, terminalIpAddress);
-		String tokenValue = encrypter.encrypt(plainTokenValue);
+		String tokenValue = encryptionProvider.getEncrypter().encrypt(plainTokenValue);
 
 		AuthToken token = assembleAuthToken(userid, password, terminalIpAddress, tokenValue);
 		tokenHolder.store(token);

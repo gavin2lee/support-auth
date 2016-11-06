@@ -20,7 +20,7 @@ public class DefaultAuthenticater implements Authenticater{
 		
 		UserDetails userDetails = null;
 		try{
-			userDetails = authenticationProvider.authenticate(credential);
+			//userDetails = authenticationProvider.authenticate(credential);
 		}catch(Exception e){
 			LOG.error("authenticating failed.", e);
 			return null;
