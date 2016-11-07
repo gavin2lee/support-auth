@@ -36,6 +36,7 @@ public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyi
 		
 		if(isExpired(authToken)){
 			LOG.debug(String.format("[token:%s] expired", token));
+			return null;
 		}
 		
 		tokenHolder.updateLastModifiedTime(authToken);
