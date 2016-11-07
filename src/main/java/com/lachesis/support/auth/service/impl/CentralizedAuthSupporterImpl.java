@@ -10,7 +10,7 @@ import com.lachesis.support.auth.model.UserDetails;
 import com.lachesis.support.auth.provider.AuthenticationProvider;
 import com.lachesis.support.auth.provider.EncryptionProvider;
 import com.lachesis.support.auth.service.CentralizedAuthSupporter;
-import com.lachesis.support.auth.token.TokenHolder;
+import com.lachesis.support.auth.token.TokenStorage;
 import com.lachesis.support.auth.verifier.TokenVerifier;
 
 public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
@@ -18,7 +18,7 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 	private AuthenticationProvider authenticationProvider;
 	private EncryptionProvider encryptionProvider;
 	
-	private TokenHolder tokenHolder;
+	private TokenStorage tokenHolder;
 	
 	private TokenVerifier tokenVerifier;
 

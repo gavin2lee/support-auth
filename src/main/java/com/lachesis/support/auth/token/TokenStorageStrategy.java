@@ -1,4 +1,4 @@
-package com.lachesis.support.auth.provider;
+package com.lachesis.support.auth.token;
 
 public interface TokenStorageStrategy {
 
