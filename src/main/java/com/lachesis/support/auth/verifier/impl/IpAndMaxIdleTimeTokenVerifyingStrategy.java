@@ -3,8 +3,8 @@ package com.lachesis.support.auth.verifier.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lachesis.support.auth.encryption.EncryptionProvider;
 import com.lachesis.support.auth.model.AuthToken;
-import com.lachesis.support.auth.provider.EncryptionProvider;
 import com.lachesis.support.auth.token.AuthTokenValueParser;
 import com.lachesis.support.auth.token.TokenStorage;
 

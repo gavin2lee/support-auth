@@ -46,11 +46,11 @@ public class CacheTest {
 		String cacheName = "AuthTokenCache";
 		int maxElementsInMemory = 10;
 		MemoryStoreEvictionPolicy memoryStoreEvictionPolicy = MemoryStoreEvictionPolicy.LRU;
-		boolean overflowToDisk = false;
+		boolean overflowToDisk = true;
 		String diskStorePath = null;
 		boolean eternal = false;
 		long timeToLiveSeconds = 0;
-		long timeToIdleSeconds = 50;
+		long timeToIdleSeconds = 15;
 		boolean diskPersistent = false;
 		long diskExpiryThreadIntervalSeconds = 3;
 		RegisteredEventListeners registeredEventListeners = null;
@@ -72,7 +72,9 @@ public class CacheTest {
 			authTokenCache.put(new Element(authToken.getTokenValue(), authToken));
 		}
 
-		Assert.assertEquals("check size", maxElementsInMemory, authTokenCache.getSize());
+		// Assert.assertEquals("check size", maxElementsInMemory,
+		// authTokenCache.getSize());
+		Assert.assertEquals("check size", maxSizeToStore, authTokenCache.getSize());
 
 		try {
 			Thread.sleep(10 * 1000);
@@ -80,18 +82,44 @@ public class CacheTest {
 			e.printStackTrace();
 		}
 
-		Assert.assertEquals("check size after 6 seconds'sleeping", maxElementsInMemory, authTokenCache.getSize());
+		Assert.assertEquals("check size after 6 seconds'sleeping", maxSizeToStore, authTokenCache.getSize());
 
 		List<?> keys = authTokenCache.getKeys();
 		System.out.println("SIZE:" + keys.size());
+
+		int count = 0;
 		for (Object key : keys) {
+			if (count > 5) {
+				break;
+			}
+			
 			Element e = authTokenCache.get(key);
 			if (e != null) {
 				AuthToken t = (AuthToken) (authTokenCache.get(key).getObjectValue());
 				System.out.println(key + " - " + t.getTerminalIpAddress());
 			}
-			
+
+			count++;
+		}
+		
+		try {
+			Thread.sleep(10 * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("second sleeping");
+
+		for (Object key : keys) {
+
+			Element e = authTokenCache.get(key);
+			if (e != null) {
+				AuthToken t = (AuthToken) (authTokenCache.get(key).getObjectValue());
+				System.out.println(key + " - " + t.getTerminalIpAddress());
+			}
+
 			System.out.println("size2 : " + authTokenCache.getSize());
+
 		}
 	}
 

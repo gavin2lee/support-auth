@@ -1,4 +1,4 @@
-package com.lachesis.support.auth.authenticater;
+package com.lachesis.support.auth.authentication;
 
 import com.lachesis.support.auth.model.AuthToken;
 import com.lachesis.support.auth.model.Credential;

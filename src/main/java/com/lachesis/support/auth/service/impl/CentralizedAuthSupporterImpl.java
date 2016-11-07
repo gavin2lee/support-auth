@@ -4,11 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lachesis.support.auth.authentication.AuthenticationProvider;
+import com.lachesis.support.auth.encryption.EncryptionProvider;
 import com.lachesis.support.auth.model.AuthToken;
 import com.lachesis.support.auth.model.Credential;
 import com.lachesis.support.auth.model.UserDetails;
-import com.lachesis.support.auth.provider.AuthenticationProvider;
-import com.lachesis.support.auth.provider.EncryptionProvider;
 import com.lachesis.support.auth.service.CentralizedAuthSupporter;
 import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.token.TokenStorage;

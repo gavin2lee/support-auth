@@ -1,4 +1,4 @@
-package com.lachesis.support.auth.encrypter;
+package com.lachesis.support.auth.encryption;
 
 public interface Encrypter {
 	String encrypt(String plainText);
