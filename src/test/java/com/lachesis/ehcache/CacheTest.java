@@ -1,6 +1,7 @@
 package com.lachesis.ehcache;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -16,6 +17,7 @@ import com.lachesis.support.auth.model.AuthToken;
 
 import junit.framework.Assert;
 import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.RegisteredEventListeners;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
@@ -42,53 +44,65 @@ public class CacheTest {
 	@Test
 	public void testCache() {
 		String cacheName = "AuthTokenCache";
-		int maxElementsInMemory = 100;
+		int maxElementsInMemory = 10;
 		MemoryStoreEvictionPolicy memoryStoreEvictionPolicy = MemoryStoreEvictionPolicy.LRU;
 		boolean overflowToDisk = false;
-        String diskStorePath = null;
-        boolean eternal = false;
-        long timeToLiveSeconds = 0;
-        long timeToIdleSeconds = 5;
-        boolean diskPersistent = false;
-        long diskExpiryThreadIntervalSeconds = 10;
-        RegisteredEventListeners registeredEventListeners = null;
-        
-        int maxSizeToStore = 110;
-		
-		Cache authTokenCache = new Cache(cacheName,
-                maxElementsInMemory,
-                memoryStoreEvictionPolicy,
-                overflowToDisk,
-                diskStorePath,
-                eternal,
-                timeToLiveSeconds,
-                timeToIdleSeconds,
-                diskPersistent,
-                diskExpiryThreadIntervalSeconds,
-                registeredEventListeners);
-		
-		
-		Assert.assertEquals("check cache name.", cacheName, authTokenCache.getName());
-		
-		
-		for(int i = 0; i < maxSizeToStore; i++){
+		String diskStorePath = null;
+		boolean eternal = false;
+		long timeToLiveSeconds = 0;
+		long timeToIdleSeconds = 50;
+		boolean diskPersistent = false;
+		long diskExpiryThreadIntervalSeconds = 3;
+		RegisteredEventListeners registeredEventListeners = null;
+
+		int maxSizeToStore = 11;
+
+		CacheManager cacheManager = CacheManager.create();
+
+		Cache authTokenCache = new Cache(cacheName, maxElementsInMemory, memoryStoreEvictionPolicy, overflowToDisk,
+				diskStorePath, eternal, timeToLiveSeconds, timeToIdleSeconds, diskPersistent,
+				diskExpiryThreadIntervalSeconds, registeredEventListeners);
+
+		cacheManager.addCache(authTokenCache);
+
+		Assert.assertEquals("check cache name.", cacheName, cacheManager.getCache(cacheName).getName());
+
+		for (int i = 0; i < maxSizeToStore; i++) {
 			AuthToken authToken = generateAuthToken();
 			authTokenCache.put(new Element(authToken.getTokenValue(), authToken));
 		}
-		
-		System.out.println("SIZE:" + authTokenCache.getSize());
-		
+
 		Assert.assertEquals("check size", maxElementsInMemory, authTokenCache.getSize());
+
+		try {
+			Thread.sleep(10 * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		Assert.assertEquals("check size after 6 seconds'sleeping", maxElementsInMemory, authTokenCache.getSize());
+
+		List<?> keys = authTokenCache.getKeys();
+		System.out.println("SIZE:" + keys.size());
+		for (Object key : keys) {
+			Element e = authTokenCache.get(key);
+			if (e != null) {
+				AuthToken t = (AuthToken) (authTokenCache.get(key).getObjectValue());
+				System.out.println(key + " - " + t.getTerminalIpAddress());
+			}
+			
+			System.out.println("size2 : " + authTokenCache.getSize());
+		}
 	}
-	
-	private AuthToken generateAuthToken(){
+
+	private AuthToken generateAuthToken() {
 		AuthToken t = new AuthToken();
 		long oid = oidSequence.incrementAndGet();
 		t.setOid(oid);
 		t.setMaxActiveSeconds(16);
 		t.setActive(true);
 		t.setLastModified(new Date());
-		t.setTerminalIpAddress("10.2.3."+oid);
+		t.setTerminalIpAddress("10.2.3." + oid);
 		t.setPassword("123456");
 		t.setTokenValue(UUID.randomUUID().toString());
 		return t;
