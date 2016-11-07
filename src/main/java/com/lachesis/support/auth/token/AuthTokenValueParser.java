@@ -9,6 +9,10 @@ public class AuthTokenValueParser {
 		super();
 		this.plainTokenValue = plainTokenValue;
 		parts = plainTokenValue.split(TOKEN_PARTS_DELIMITER);
+		
+		if(parts.length != 3){
+			throw new RuntimeException("token should consist of 3 parts but "+parts.length);
+		}
 	}
 	
 	public String getTerminalIpAddress(){
