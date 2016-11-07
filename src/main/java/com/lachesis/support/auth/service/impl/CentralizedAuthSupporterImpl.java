@@ -10,6 +10,7 @@ import com.lachesis.support.auth.model.UserDetails;
 import com.lachesis.support.auth.provider.AuthenticationProvider;
 import com.lachesis.support.auth.provider.EncryptionProvider;
 import com.lachesis.support.auth.service.CentralizedAuthSupporter;
+import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.token.TokenStorage;
 import com.lachesis.support.auth.verifier.TokenVerifier;
 
@@ -73,7 +74,7 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 	}
 
 	private String assemblePlainTokenValue(UserDetails userDetails, String terminalIpAddress) {
-		return String.format("%s|%s|%s", terminalIpAddress, userDetails.getUserid(), System.currentTimeMillis());
+		return new AuthTokenValueAssembler(userDetails.getUserid(), terminalIpAddress).buildTokenValue();
 	}
 	
 	private UserDetails doAuthenticate(String token, String terminalIpAddress){
