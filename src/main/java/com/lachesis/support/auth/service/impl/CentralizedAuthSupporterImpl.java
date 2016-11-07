@@ -70,11 +70,11 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 	}
 
 	private AuthToken assembleAuthToken(String userid, String password, String terminalIpAddress, String tokenValue) {
-		return new AuthTokenGenerator(userid, password, terminalIpAddress, tokenValue).generate();
+		return (new AuthTokenGenerator(userid, password, terminalIpAddress, tokenValue).generate());
 	}
 
 	private String assemblePlainTokenValue(UserDetails userDetails, String terminalIpAddress) {
-		return new AuthTokenValueAssembler(userDetails.getUserid(), terminalIpAddress).buildTokenValue();
+		return (new AuthTokenValueAssembler(userDetails.getUserid(), terminalIpAddress).buildTokenValue());
 	}
 	
 	private UserDetails doAuthenticate(String token, String terminalIpAddress){
