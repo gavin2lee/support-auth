@@ -21,7 +21,7 @@ class AuthTokenGenerator {
 		AuthToken t = new AuthToken();
 		t.setActive(true);
 		t.setLastModified(new Date());
-		t.setMaxActiveMinutes(getMaxActiveMinutes());
+		t.setMaxActiveSeconds(getMaxActiveSeconds());
 		t.setPassword(password);
 		t.setTerminalIpAddress(terminalIpAddress);
 		t.setUserid(userid);
@@ -30,7 +30,7 @@ class AuthTokenGenerator {
 		return t;
 	}
 	
-	private int getMaxActiveMinutes(){
-		return 5;
+	private int getMaxActiveSeconds(){
+		return 5*60;
 	}
 }

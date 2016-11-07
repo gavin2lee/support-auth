@@ -11,7 +11,7 @@ public class AuthToken implements Serializable {
 	private Long oid;
 	private String tokenValue;
 	private String terminalIpAddress;
-	private int maxActiveMinutes;
+	private int maxActiveSeconds;
 	private boolean active;
 	private Date lastModified;
 	private String userid;
@@ -35,11 +35,11 @@ public class AuthToken implements Serializable {
 	public void setTerminalIpAddress(String terminalIpAddress) {
 		this.terminalIpAddress = terminalIpAddress;
 	}
-	public int getMaxActiveMinutes() {
-		return maxActiveMinutes;
+	public int getMaxActiveSeconds() {
+		return maxActiveSeconds;
 	}
-	public void setMaxActiveMinutes(int maxActiveMinutes) {
-		this.maxActiveMinutes = maxActiveMinutes;
+	public void setMaxActiveSeconds(int maxActiveSeconds) {
+		this.maxActiveSeconds = maxActiveSeconds;
 	}
 	public boolean isActive() {
 		return active;
