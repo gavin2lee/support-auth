@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface UserDetails {
 	String getUserid();
+	String getPassword();
 	List<Authority> getAuthorizes();
 }
