@@ -21,16 +21,11 @@ class AuthTokenGenerator {
 		AuthToken t = new AuthToken();
 		t.setActive(true);
 		t.setLastModified(new Date());
-		t.setMaxActiveSeconds(getMaxActiveSeconds());
 		t.setPassword(password);
 		t.setTerminalIpAddress(terminalIpAddress);
 		t.setUserid(userid);
 		t.setTokenValue(tokenValue);
 		
 		return t;
-	}
-	
-	private int getMaxActiveSeconds(){
-		return 5*60;
 	}
 }
