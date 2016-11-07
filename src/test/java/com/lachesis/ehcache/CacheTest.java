@@ -99,10 +99,9 @@ public class CacheTest {
 		AuthToken t = new AuthToken();
 		long oid = oidSequence.incrementAndGet();
 		t.setOid(oid);
-		t.setMaxActiveSeconds(16);
 		t.setActive(true);
 		t.setLastModified(new Date());
-		t.setTerminalIpAddress("10.2.3." + oid);
+		t.setTerminalIpAddress("10.10.10." + oid);
 		t.setPassword("123456");
 		t.setTokenValue(UUID.randomUUID().toString());
 		return t;
