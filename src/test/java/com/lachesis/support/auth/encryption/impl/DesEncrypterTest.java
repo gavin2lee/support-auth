@@ -52,6 +52,8 @@ public class DesEncrypterTest {
 
 		String cipherText = encrypter.encrypt(plainText);
 		
+		//"/NQ5ultMnf9deFRuHmyGk68L/nv9fTwa4g+4lpY0pTYOa/q1I5HTxw=="
+		
 		Assert.assertNotNull(cipherText);
 		
 		String decryptedText = encrypter.decrypt(cipherText);
@@ -63,7 +65,7 @@ public class DesEncrypterTest {
 		
 		long timeElapse = (endTime - startTime);
 		
-		Assert.assertTrue("elapsed time shoud less than 150 milliseconds", timeElapse < 150);
+		Assert.assertTrue("elapsed time shoud less than 200 milliseconds", timeElapse < 150);
 	}
 
 }
