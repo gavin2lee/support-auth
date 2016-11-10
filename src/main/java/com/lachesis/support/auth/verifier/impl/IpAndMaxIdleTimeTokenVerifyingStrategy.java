@@ -16,6 +16,8 @@ public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyi
 	private AuthTokenManager tokenHolder;
 	
 	private EncryptionProvider encryptionProvider;
+	
+	private int tokenMaxIdleSeconds = TOKEN_MAX_IDLE_SECONDS;
 
 	
 	protected AuthToken doVerify(String token, String terminalIpAddress){
@@ -48,7 +50,7 @@ public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyi
 		long currentTime = System.currentTimeMillis();
 		
 		long idleTime = (currentTime - lastModifiedTime);
-		return (idleTime > (TOKEN_MAX_IDLE_SECONDS * 1000) );
+		return (idleTime > (tokenMaxIdleSeconds * 1000) );
 	}
 
 }
