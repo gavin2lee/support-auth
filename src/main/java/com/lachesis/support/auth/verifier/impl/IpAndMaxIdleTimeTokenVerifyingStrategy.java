@@ -6,14 +6,14 @@ import org.slf4j.LoggerFactory;
 import com.lachesis.support.auth.encryption.EncryptionProvider;
 import com.lachesis.support.auth.model.AuthToken;
 import com.lachesis.support.auth.token.AuthTokenValueParser;
-import com.lachesis.support.auth.token.TokenStorage;
+import com.lachesis.support.auth.token.AuthTokenManager;
 
 public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyingStrategy {
 	public static final int TOKEN_MAX_IDLE_SECONDS = 300;
 	private static final Logger LOG = LoggerFactory.getLogger(IpAndMaxIdleTimeTokenVerifyingStrategy.class);
 	
 	
-	private TokenStorage tokenHolder;
+	private AuthTokenManager tokenHolder;
 	
 	private EncryptionProvider encryptionProvider;
 

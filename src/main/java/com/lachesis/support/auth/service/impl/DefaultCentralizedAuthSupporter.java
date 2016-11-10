@@ -9,7 +9,7 @@ import com.lachesis.support.auth.model.AuthToken;
 import com.lachesis.support.auth.model.Credential;
 import com.lachesis.support.auth.model.UserDetails;
 import com.lachesis.support.auth.token.AuthTokenValueAssembler;
-import com.lachesis.support.auth.token.TokenStorage;
+import com.lachesis.support.auth.token.AuthTokenManager;
 import com.lachesis.support.auth.verifier.TokenVerifier;
 
 public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupporter {
@@ -17,7 +17,7 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 	private AuthenticationProvider authenticationProvider;
 	private EncryptionProvider encryptionProvider;
 	
-	private TokenStorage tokenHolder;
+	private AuthTokenManager tokenHolder;
 	
 	private TokenVerifier tokenVerifier;
 
