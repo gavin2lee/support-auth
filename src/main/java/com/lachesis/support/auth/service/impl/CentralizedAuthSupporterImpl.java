@@ -54,7 +54,7 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 
 	private String doGenerateToken(String userid, String password, String terminalIpAddress) {
 		Credential credential = new Credential(userid, password);
-		UserDetails userDetails = authenticationProvider.getAuthenticater().authenticateWithCredential(credential);
+		UserDetails userDetails = authenticationProvider.getAuthenticator().authenticateWithCredential(credential);
 		if (userDetails == null) {
 			LOG.debug(String.format("failed to authenticate [userid:%s]", userid));
 			return null;
@@ -65,6 +65,8 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 
 		AuthToken token = assembleAuthToken(userid, password, terminalIpAddress, tokenValue);
 		tokenHolder.store(token);
+		
+		//TODO cache the userDetails
 
 		return tokenValue;
 	}
@@ -84,7 +86,7 @@ public class CentralizedAuthSupporterImpl implements CentralizedAuthSupporter {
 			return null;
 		}
 		
-		UserDetails userDetails = authenticationProvider.getAuthenticater().authenticateWithAuthToken(authToken);
+		UserDetails userDetails = authenticationProvider.getAuthenticator().authenticateWithAuthToken(authToken);
 		if(userDetails == null){
 			LOG.warn(String.format("authenticating failed for [token:%s,ip:%s]", token,terminalIpAddress));
 			return null;
