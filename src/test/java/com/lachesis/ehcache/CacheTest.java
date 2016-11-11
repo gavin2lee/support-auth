@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.lachesis.support.auth.model.AuthToken;
@@ -41,6 +42,7 @@ public class CacheTest {
 	public void tearDown() throws Exception {
 	}
 
+	@Ignore
 	@Test
 	public void testCache() {
 		String cacheName = "AuthTokenCache";

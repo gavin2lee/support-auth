@@ -53,8 +53,9 @@ public class AuthTokenCacheTest {
 	}
 	
 	@Test
-	public void testPutTokenInBatch(){
+	public void testCacheTokenInBatch(){
 		AuthToken tokenToRemove = null;
+		int maxSizeToCache = 2000;
 		for(int i=0; i<2000; i++){
 			AuthToken t = mockAuthToken();
 			authTokenCache.put(new Element(t.getTokenValue(),t));
@@ -64,20 +65,16 @@ public class AuthTokenCacheTest {
 			}
 		}
 		
-		System.out.println("TO REMOVE :"+tokenToRemove.getTerminalIpAddress());
 		authTokenCache.remove(tokenToRemove.getTokenValue());
 		
 		List<?> keys = authTokenCache.getKeys();
 		
-		for(Object key:keys){
-			Element entry = authTokenCache.get(key);
-			AuthToken at = (AuthToken) entry.getObjectValue();
-			System.out.println(at.getTerminalIpAddress());
-		}
+		Assert.assertEquals("check cache size", (maxSizeToCache-1), authTokenCache.getSize());
+		Assert.assertEquals("check size of one element removed cache", (maxSizeToCache-1), keys.size());
 	}
 	
 	@Test
-	public void testPutUserDetails(){
+	public void testCacheUserDetails(){
 		UserDetails userDetails = mockUserDetails();
 		AuthToken token = mockAuthToken();
 		
