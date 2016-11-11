@@ -16,6 +16,18 @@
            transactionalMode="off"
            memoryStoreEvictionPolicy="LRU">
     </cache>
+    
+    <cache name="userDetailsCache"
+           maxEntriesLocalHeap="1000"
+           eternal="false"
+           overflowToDisk="true"
+           diskPersistent="true"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="1200"
+           diskExpiryThreadIntervalSeconds="1"
+           transactionalMode="off"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
 
          
 </ehcache>

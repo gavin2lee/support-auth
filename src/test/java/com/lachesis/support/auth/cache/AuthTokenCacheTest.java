@@ -9,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.lachesis.support.auth.model.AuthToken;
+import com.lachesis.support.auth.model.Authority;
+import com.lachesis.support.auth.model.SimpleUserDetails;
+import com.lachesis.support.auth.model.UserDetails;
 
 import junit.framework.Assert;
 import net.sf.ehcache.Cache;
@@ -18,9 +21,13 @@ import net.sf.ehcache.Element;
 public class AuthTokenCacheTest {
 	CacheManager manager;
 	Cache authTokenCache;
+	Cache userDetailsCache;
 	String ehcacheConfigFilename = "ehcache.xml";
 	String authTokenCacheName = "authTokenCache";
-	private AtomicLong oidSequence = new AtomicLong();
+	String userDetailsCacheName = "userDetailsCache";
+	
+	private AtomicLong tokenSequence = new AtomicLong();
+	private AtomicLong userDetailsSequence = new AtomicLong();
 	
 
 	@Before
@@ -28,13 +35,15 @@ public class AuthTokenCacheTest {
 		manager = CacheManager
 				.create(AuthTokenCacheTest.class.getClassLoader().getResourceAsStream(ehcacheConfigFilename));
 		authTokenCache = manager.getCache(authTokenCacheName);
+		userDetailsCache = manager.getCache(userDetailsCacheName);
 		Assert.assertNotNull("make sure cache manager is not null", manager);
 		Assert.assertNotNull("make sure auth token cache is not null", authTokenCache);
+		Assert.assertNotNull("make sure user details cahce is not null", userDetailsCache);
 	}
 
 	@Test
 	public void testPutOneToken() {
-		AuthToken t = generateAuthToken();
+		AuthToken t = mockAuthToken();
 		
 		authTokenCache.put(new Element(t.getTokenValue(),t));
 		
@@ -47,7 +56,7 @@ public class AuthTokenCacheTest {
 	public void testPutTokenInBatch(){
 		AuthToken tokenToRemove = null;
 		for(int i=0; i<2000; i++){
-			AuthToken t = generateAuthToken();
+			AuthToken t = mockAuthToken();
 			authTokenCache.put(new Element(t.getTokenValue(),t));
 			
 			if(i == 10){
@@ -67,9 +76,31 @@ public class AuthTokenCacheTest {
 		}
 	}
 	
-	private AuthToken generateAuthToken() {
+	@Test
+	public void testPutUserDetails(){
+		UserDetails userDetails = mockUserDetails();
+		AuthToken token = mockAuthToken();
+		
+		userDetailsCache.put(new Element(token.getTokenValue(), userDetails));
+		
+		UserDetails userDetailsFromCache = (UserDetails) userDetailsCache.get(token.getTokenValue()).getObjectValue();
+		
+		Assert.assertNotNull("check if user details from cahce is null", userDetailsFromCache);
+		Assert.assertEquals("check the password of user details", "123456", userDetailsFromCache.getPassword());
+	}
+	
+	private UserDetails mockUserDetails(){
+		long seq = userDetailsSequence.getAndIncrement();
+		String userid = "test-"+seq;
+		String password = "123456";
+		List<Authority> authorities = null;
+		
+		return new SimpleUserDetails(userid, password, authorities);
+	}
+	
+	private AuthToken mockAuthToken() {
 		AuthToken t = new AuthToken();
-		long oid = oidSequence.incrementAndGet();
+		long oid = tokenSequence.incrementAndGet();
 		t.setOid(oid);
 		t.setActive(true);
 		t.setLastModified(new Date());

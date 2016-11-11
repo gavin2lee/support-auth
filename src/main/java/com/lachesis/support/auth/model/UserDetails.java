@@ -1,9 +1,10 @@
 package com.lachesis.support.auth.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface UserDetails {
+public interface UserDetails extends Serializable{
 	String getUserid();
 	String getPassword();
-	List<Authority> getAuthorizes();
+	List<Authority> getAuthorities();
 }
