@@ -50,6 +50,10 @@ public class AuthTokenCacheTest {
 		AuthToken ret = (AuthToken) authTokenCache.get(t.getTokenValue()).getObjectValue();
 		Assert.assertNotNull("check if the element got from cache is not null.", ret);
 		Assert.assertEquals("check token value", t.getTokenValue(), ret.getTokenValue());
+		
+		authTokenCache.remove(t.getTokenValue());
+		Element elementAfterRemove = authTokenCache.get(t.getTokenValue());
+		Assert.assertNull("should be null after remove", elementAfterRemove);
 	}
 	
 	@Test
