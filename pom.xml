@@ -2,11 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>support-auth</name>
-	<artifactId>support-auth</artifactId>
+	
 	<groupId>com.lachesis.support</groupId>
-	<packaging>jar</packaging>
+	<artifactId>support-auth</artifactId>
 	<version>0.01</version>
+	
+	<name>support-auth</name>
+	<packaging>jar</packaging>
+	
 
 	<properties>
 		<slf4j.version>1.7.13</slf4j.version>
