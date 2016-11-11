@@ -25,10 +25,9 @@ public class AuthTokenCacheTest {
 	String ehcacheConfigFilename = "ehcache.xml";
 	String authTokenCacheName = "authTokenCache";
 	String userDetailsCacheName = "userDetailsCache";
-	
+
 	private AtomicLong tokenSequence = new AtomicLong();
 	private AtomicLong userDetailsSequence = new AtomicLong();
-	
 
 	@Before
 	public void setUp() throws Exception {
@@ -44,61 +43,80 @@ public class AuthTokenCacheTest {
 	@Test
 	public void testPutOneToken() {
 		AuthToken t = mockAuthToken();
-		
-		authTokenCache.put(new Element(t.getTokenValue(),t));
-		
+
+		authTokenCache.put(new Element(t.getTokenValue(), t));
+
 		AuthToken ret = (AuthToken) authTokenCache.get(t.getTokenValue()).getObjectValue();
 		Assert.assertNotNull("check if the element got from cache is not null.", ret);
 		Assert.assertEquals("check token value", t.getTokenValue(), ret.getTokenValue());
-		
+
 		authTokenCache.remove(t.getTokenValue());
 		Element elementAfterRemove = authTokenCache.get(t.getTokenValue());
 		Assert.assertNull("should be null after remove", elementAfterRemove);
 	}
-	
+
 	@Test
-	public void testCacheTokenInBatch(){
+	public void testCacheTokenInBatch() {
 		AuthToken tokenToRemove = null;
+		AuthToken tokenToUpdate = null;
 		int maxSizeToCache = 2000;
-		for(int i=0; i<2000; i++){
+		for (int i = 0; i < 2000; i++) {
 			AuthToken t = mockAuthToken();
-			authTokenCache.put(new Element(t.getTokenValue(),t));
-			
-			if(i == 10){
+			authTokenCache.put(new Element(t.getTokenValue(), t));
+
+			if (i == 10) {
 				tokenToRemove = t;
 			}
+
+			if (i == 11) {
+				tokenToUpdate = t;
+			}
 		}
-		
+
 		authTokenCache.remove(tokenToRemove.getTokenValue());
+		
+		tokenToUpdate.setTerminalIpAddress("255.255.255.255");
+		try {
+			authTokenCache.tryWriteLockOnKey(tokenToUpdate.getTokenValue(), 1000);
+			authTokenCache.replace(new Element(tokenToUpdate.getTokenValue(), tokenToUpdate));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}finally{
+			authTokenCache.releaseWriteLockOnKey(tokenToUpdate.getTokenValue());
+		}
 		
 		List<?> keys = authTokenCache.getKeys();
 		
-		Assert.assertEquals("check cache size", (maxSizeToCache-1), authTokenCache.getSize());
-		Assert.assertEquals("check size of one element removed cache", (maxSizeToCache-1), keys.size());
+		AuthToken retTokenToUpdate = (AuthToken) authTokenCache.get(tokenToUpdate.getTokenValue()).getObjectValue();
+		Assert.assertNotNull("check token to update", retTokenToUpdate);
+		Assert.assertEquals("check ip of token to update", "255.255.255.255", retTokenToUpdate.getTerminalIpAddress());
+
+		Assert.assertEquals("check cache size", (maxSizeToCache - 1), authTokenCache.getSize());
+		Assert.assertEquals("check size of one element removed cache", (maxSizeToCache - 1), keys.size());
 	}
-	
+
 	@Test
-	public void testCacheUserDetails(){
+	public void testCacheUserDetails() {
 		UserDetails userDetails = mockUserDetails();
 		AuthToken token = mockAuthToken();
-		
+
 		userDetailsCache.put(new Element(token.getTokenValue(), userDetails));
-		
+
 		UserDetails userDetailsFromCache = (UserDetails) userDetailsCache.get(token.getTokenValue()).getObjectValue();
-		
+
 		Assert.assertNotNull("check if user details from cahce is null", userDetailsFromCache);
 		Assert.assertEquals("check the password of user details", "123456", userDetailsFromCache.getPassword());
 	}
-	
-	private UserDetails mockUserDetails(){
+
+	private UserDetails mockUserDetails() {
 		long seq = userDetailsSequence.getAndIncrement();
-		String userid = "test-"+seq;
+		String userid = "test-" + seq;
 		String password = "123456";
 		List<Authority> authorities = null;
-		
+
 		return new SimpleUserDetails(userid, password, authorities);
 	}
-	
+
 	private AuthToken mockAuthToken() {
 		AuthToken t = new AuthToken();
 		long oid = tokenSequence.incrementAndGet();
