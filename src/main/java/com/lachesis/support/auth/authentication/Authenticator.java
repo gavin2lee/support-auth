@@ -1,8 +1,8 @@
 package com.lachesis.support.auth.authentication;
 
-import com.lachesis.support.auth.model.AuthToken;
-import com.lachesis.support.auth.model.Credential;
-import com.lachesis.support.auth.model.UserDetails;
+import com.lachesis.support.auth.vo.AuthToken;
+import com.lachesis.support.auth.vo.Credential;
+import com.lachesis.support.auth.vo.UserDetails;
 
 public interface Authenticator {
 	UserDetails authenticateWithCredential(Credential credential);

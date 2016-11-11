@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.lachesis.support.auth.model.AuthToken;
+import com.lachesis.support.auth.vo.AuthToken;
 
 import junit.framework.Assert;
 import net.sf.ehcache.Cache;

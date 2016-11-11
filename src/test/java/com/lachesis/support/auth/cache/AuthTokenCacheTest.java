@@ -8,10 +8,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.lachesis.support.auth.model.AuthToken;
-import com.lachesis.support.auth.model.Authority;
-import com.lachesis.support.auth.model.SimpleUserDetails;
-import com.lachesis.support.auth.model.UserDetails;
+import com.lachesis.support.auth.vo.AuthToken;
+import com.lachesis.support.auth.vo.Authority;
+import com.lachesis.support.auth.vo.SimpleUserDetails;
+import com.lachesis.support.auth.vo.UserDetails;
 
 import junit.framework.Assert;
 import net.sf.ehcache.Cache;

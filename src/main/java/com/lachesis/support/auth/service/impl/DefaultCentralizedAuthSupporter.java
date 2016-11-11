@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import com.lachesis.support.auth.authentication.AuthenticationProvider;
 import com.lachesis.support.auth.encryption.EncryptionProvider;
-import com.lachesis.support.auth.model.AuthToken;
-import com.lachesis.support.auth.model.Credential;
-import com.lachesis.support.auth.model.UserDetails;
 import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.token.AuthTokenManager;
 import com.lachesis.support.auth.verifier.TokenVerifier;
+import com.lachesis.support.auth.vo.AuthToken;
+import com.lachesis.support.auth.vo.Credential;
+import com.lachesis.support.auth.vo.UserDetails;
 
 public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupporter {
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultCentralizedAuthSupporter.class);

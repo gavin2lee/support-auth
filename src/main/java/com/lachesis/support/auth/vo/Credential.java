@@ -1,4 +1,4 @@
-package com.lachesis.support.auth.model;
+package com.lachesis.support.auth.vo;
 
 public class Credential {
 	private String username;

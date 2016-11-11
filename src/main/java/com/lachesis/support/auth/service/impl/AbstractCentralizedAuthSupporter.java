@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.lachesis.support.auth.model.UserDetails;
 import com.lachesis.support.auth.service.CentralizedAuthSupporter;
+import com.lachesis.support.auth.vo.UserDetails;
 
 public abstract class AbstractCentralizedAuthSupporter implements CentralizedAuthSupporter {
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractCentralizedAuthSupporter.class);

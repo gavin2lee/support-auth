@@ -1,6 +1,6 @@
 package com.lachesis.support.auth.service;
 
-import com.lachesis.support.auth.model.UserDetails;
+import com.lachesis.support.auth.vo.UserDetails;
 
 public interface CentralizedAuthSupporter {
 	String generateToken(String userid, String password, String terminalIpAddress);

@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lachesis.support.auth.encryption.EncryptionProvider;
-import com.lachesis.support.auth.model.AuthToken;
 import com.lachesis.support.auth.token.AuthTokenValueParser;
+import com.lachesis.support.auth.vo.AuthToken;
 import com.lachesis.support.auth.token.AuthTokenManager;
 
 public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyingStrategy {
