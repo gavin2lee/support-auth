@@ -49,7 +49,20 @@ public class DefaultCentralizedAuthSupporterTest {
 
 	@Test
 	public void testDismissToken() {
-//		fail("Not yet implemented");
+		String userid = "283";
+		String password = "123";
+		String ip = "10.10.10.10";
+		
+		String token = supporter.generateToken(userid, password, ip);
+		
+		UserDetails userDetails = supporter.authenticate(token, ip);
+		
+		Assert.assertNotNull("user details should not be null", userDetails);
+		
+		supporter.dismissToken(token);
+		UserDetails userDetailsAfterDismiss = supporter.authenticate(token, ip);
+		
+		Assert.assertNull("user details should be null after dismission", userDetailsAfterDismiss);
 	}
 
 }

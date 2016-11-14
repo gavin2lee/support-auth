@@ -49,7 +49,7 @@ public abstract class AbstractCentralizedAuthSupporter implements CentralizedAut
 			return;
 		}
 
-		// TODO
+		doDismissToken(token);
 
 	}
 	
@@ -60,4 +60,6 @@ public abstract class AbstractCentralizedAuthSupporter implements CentralizedAut
 	protected abstract String doGenerateToken(String userid, String password, String terminalIpAddress);
 
 	protected abstract UserDetails doAuthenticate(String token, String terminalIpAddress);
+	
+	protected abstract void doDismissToken(String token);
 }

@@ -23,7 +23,7 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 	@Autowired
 	private EncryptionProvider encryptionProvider;
 	@Autowired
-	private AuthTokenManager tokenHolder;
+	private AuthTokenManager tokenManager;
 	@Autowired
 	private TokenVerifier tokenVerifier;
 	@Autowired
@@ -41,7 +41,7 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 		String tokenValue = encryptionProvider.getEncrypter().encrypt(plainTokenValue);
 
 		AuthToken token = assembleAuthToken(userid, password, terminalIpAddress, tokenValue);
-		tokenHolder.store(token);
+		tokenManager.store(token);
 		
 		cacheUserDetails(tokenValue, userDetails);
 
@@ -73,5 +73,10 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 			return null;
 		}
 		return userDetails;
+	}
+
+	@Override
+	protected void doDismissToken(String token) {
+		tokenManager.dismiss(token);
 	}
 }
