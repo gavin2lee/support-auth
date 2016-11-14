@@ -29,8 +29,6 @@ public class DefaultCentralizedAuthSupporterTest {
 		
 		String token = supporter.generateToken(userid, password, ip);
 		
-		System.out.println("TOKEN:"+token);
-		
 		Assert.assertNotNull("token should not be null", token);
 	}
 
