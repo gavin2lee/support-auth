@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.lachesis.support.auth.vo.UserDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:service-config-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/service-config-test.xml"})
 public class DefaultCentralizedAuthSupporterTest {
 	
 	@Autowired

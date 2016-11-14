@@ -15,8 +15,8 @@
      http://mybatis.org/schema/mybatis-spring.xsd
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context.xsd">
-	<import resource="spring/datasource-config.xml"/>
-	<import resource="spring/repository-config.xml"/>
-	<import resource="spring/ehcache-config.xml"/>
-	<import resource="spring/service-config.xml"/>
+	<import resource="datasource-config.xml"/>
+	<import resource="repository-config.xml"/>
+	<import resource="ehcache-config.xml"/>
+	<import resource="service-config.xml"/>
 </beans>

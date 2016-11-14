@@ -23,6 +23,7 @@ import net.sf.ehcache.Element;
 import net.sf.ehcache.event.RegisteredEventListeners;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
+@Ignore
 public class CacheTest {
 	private AtomicLong oidSequence = new AtomicLong();
 

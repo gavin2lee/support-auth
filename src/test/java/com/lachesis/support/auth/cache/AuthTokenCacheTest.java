@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.lachesis.support.auth.vo.AuthToken;
@@ -18,6 +19,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+@Ignore
 public class AuthTokenCacheTest {
 	CacheManager manager;
 	Cache authTokenCache;

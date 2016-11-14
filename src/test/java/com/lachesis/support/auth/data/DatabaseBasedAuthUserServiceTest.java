@@ -12,9 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.lachesis.support.auth.model.AuthUser;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/service-config.xml",
-		"classpath:spring/repository-config.xml",
-		"classpath:spring/datasource-config.xml"})
+@ContextConfiguration(locations = {"classpath:spring/service-config-test.xml"})
 public class DatabaseBasedAuthUserServiceTest {
 
 	@Autowired
