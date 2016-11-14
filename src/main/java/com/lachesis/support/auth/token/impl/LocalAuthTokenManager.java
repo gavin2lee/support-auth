@@ -4,14 +4,18 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lachesis.support.auth.token.AuthTokenManager;
 import com.lachesis.support.auth.token.TokenStorageStrategy;
 import com.lachesis.support.auth.vo.AuthToken;
 
+@Service("localAuthTokenManager")
 public class LocalAuthTokenManager implements AuthTokenManager {
 	private static final Logger LOG = LoggerFactory.getLogger(LocalAuthTokenManager.class);
 	
+	@Autowired
 	private TokenStorageStrategy tokenStorageStrategy;
 	
 	public void setTokenStorageStrategy(TokenStorageStrategy tokenStorageStrategy) {
