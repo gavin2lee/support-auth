@@ -24,75 +24,76 @@ public class LocalDatabaseAuthenticator implements Authenticator {
 	@Autowired
 	@Qualifier("databaseBasedAuthUserService")
 	private AuthUserService authUserService;
-	
+
 	@Autowired
 	private AuthCacheProvider authCacheProvider;
-	
+
 	@Override
 	public UserDetails authenticateWithCredential(Credential credential) {
-		if(credential == null){
+		if (credential == null) {
 			LOG.error("credential should be specified.");
 			throw new IllegalArgumentException();
 		}
-		
+
 		String userid = credential.getUsername();
 		String password = credential.getPassword();
-		
-		if(StringUtils.isBlank(userid) || StringUtils.isBlank(password)){
+
+		if (StringUtils.isBlank(userid) || StringUtils.isBlank(password)) {
 			LOG.error("invalid credential");
 			throw new IllegalArgumentException();
 		}
-		
+
 		return doAuthenticateWithCredential(userid, password);
 	}
 
 	@Override
 	public UserDetails authenticateWithAuthToken(AuthToken token) {
-		if(token == null){
+		if (token == null) {
 			return null;
 		}
-		
+
 		return doAuthenticateWithAuthToken(token);
 	}
-	
-	protected UserDetails doAuthenticateWithAuthToken(AuthToken token){
+
+	protected UserDetails doAuthenticateWithAuthToken(AuthToken token) {
 		UserDetails userDetailsToReturn = null;
 		String tokenValue = token.getTokenValue();
-		if(StringUtils.isNotBlank(tokenValue)){
+		if (StringUtils.isNotBlank(tokenValue)) {
 			userDetailsToReturn = findFromUserDetailsCache(tokenValue);
 		}
-		
-		if(userDetailsToReturn != null){
+
+		if (userDetailsToReturn != null) {
 			return userDetailsToReturn;
 		}
-		
-		if(StringUtils.isBlank(token.getUserid()) || StringUtils.isBlank(token.getPassword()) ){
+
+		if (StringUtils.isBlank(token.getUserid()) || StringUtils.isBlank(token.getPassword())) {
 			LOG.warn("at least the userid and password should be provided");
 			return null;
 		}
-		
+
 		return doAuthenticateWithCredential(token.getUserid(), token.getPassword());
 	}
-	
-	private UserDetails findFromUserDetailsCache(String tokenValue){
+
+	private UserDetails findFromUserDetailsCache(String tokenValue) {
 		AuthCache userDetailsCache = authCacheProvider.getUserDetailsCache();
 		UserDetails userDetails = (UserDetails) userDetailsCache.get(tokenValue);
 		return userDetails;
 	}
-	
-	protected UserDetails doAuthenticateWithCredential(String userid,String password){
+
+	protected UserDetails doAuthenticateWithCredential(String userid, String password) {
 		AuthUser user = authUserService.findAuthUserByUserid(userid);
-		if(user == null){
-			LOG.debug("authenticating failed for "+userid);
+		if (user == null) {
+			LOG.debug("authenticating failed for " + userid);
 			return null;
 		}
-		
-		if(!password.equals(user.getPassword())){
-			LOG.debug("password comparing failed for "+userid);
+
+		if (!password.equals(user.getPassword())) {
+			LOG.debug("password comparing failed for " + userid);
 			return null;
 		}
-		
-		UserDetails userDetails = new SimpleUserDetails(userid,password, null);
+
+		UserDetails userDetails = new SimpleUserDetails(String.valueOf(user.getId()), user.getUsername(),
+				user.getPassword(), null);
 		return userDetails;
 	}
 

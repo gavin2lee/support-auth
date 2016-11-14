@@ -105,7 +105,7 @@ public class AuthTokenCacheTest {
 		UserDetails userDetailsFromCache = (UserDetails) userDetailsCache.get(token.getTokenValue()).getObjectValue();
 
 		Assert.assertNotNull("check if user details from cahce is null", userDetailsFromCache);
-		Assert.assertEquals("check the password of user details", "123456", userDetailsFromCache.getPassword());
+		Assert.assertEquals("check the password of user details", "123456", ((SimpleUserDetails)userDetailsFromCache).getPassword());
 	}
 
 	private UserDetails mockUserDetails() {
@@ -114,7 +114,7 @@ public class AuthTokenCacheTest {
 		String password = "123456";
 		List<Authority> authorities = null;
 
-		return new SimpleUserDetails(userid, password, authorities);
+		return new SimpleUserDetails(String.valueOf(seq), userid, password, authorities);
 	}
 
 	private AuthToken mockAuthToken() {

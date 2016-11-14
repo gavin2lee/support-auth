@@ -10,12 +10,14 @@ public class SimpleUserDetails implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = -4072057897019711567L;
+	private String resourceId;
 	private String userid;
 	private String password;
 	private List<Authority> authorities;
 	
-	public SimpleUserDetails(String userid, String password, List<Authority> authorities) {
+	public SimpleUserDetails(String resourceId, String userid, String password, List<Authority> authorities) {
 		super();
+		this.resourceId = resourceId;
 		this.userid = userid;
 		this.password = password;
 		this.authorities = authorities;
@@ -26,9 +28,16 @@ public class SimpleUserDetails implements UserDetails {
 		return userid;
 	}
 
-	@Override
 	public String getPassword() {
 		return password;
+	}
+	
+	public String getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
 	}
 
 	@Override
