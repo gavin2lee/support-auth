@@ -2,24 +2,32 @@ package com.lachesis.support.auth.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lachesis.support.auth.authentication.AuthenticationProvider;
+import com.lachesis.support.auth.cache.AuthCacheProvider;
 import com.lachesis.support.auth.encryption.EncryptionProvider;
-import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.token.AuthTokenManager;
+import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.verifier.TokenVerifier;
 import com.lachesis.support.auth.vo.AuthToken;
 import com.lachesis.support.auth.vo.Credential;
 import com.lachesis.support.auth.vo.UserDetails;
 
+@Service("defaultCentralizedAuthSupporter")
 public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupporter {
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultCentralizedAuthSupporter.class);
+	@Autowired
 	private AuthenticationProvider authenticationProvider;
+	@Autowired
 	private EncryptionProvider encryptionProvider;
-	
+	@Autowired
 	private AuthTokenManager tokenHolder;
-	
+	@Autowired
 	private TokenVerifier tokenVerifier;
+	@Autowired
+	private AuthCacheProvider authCacheProvider;
 
 	protected String doGenerateToken(String userid, String password, String terminalIpAddress) {
 		Credential credential = new Credential(userid, password);
@@ -35,9 +43,13 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 		AuthToken token = assembleAuthToken(userid, password, terminalIpAddress, tokenValue);
 		tokenHolder.store(token);
 		
-		//TODO cache the userDetails
+		cacheUserDetails(tokenValue, userDetails);
 
 		return tokenValue;
+	}
+	
+	private void cacheUserDetails(String tokenValue, UserDetails userDetails){
+		authCacheProvider.getUserDetailsCache().put(tokenValue, userDetails);
 	}
 
 	private AuthToken assembleAuthToken(String userid, String password, String terminalIpAddress, String tokenValue) {

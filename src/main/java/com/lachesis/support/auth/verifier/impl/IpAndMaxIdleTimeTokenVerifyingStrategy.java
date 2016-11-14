@@ -2,19 +2,23 @@ package com.lachesis.support.auth.verifier.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lachesis.support.auth.encryption.EncryptionProvider;
 import com.lachesis.support.auth.token.AuthTokenValueParser;
 import com.lachesis.support.auth.vo.AuthToken;
 import com.lachesis.support.auth.token.AuthTokenManager;
 
+@Service("ipAndMaxIdleTimeTokenVerifyingStrategy")
 public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyingStrategy {
 	public static final int TOKEN_MAX_IDLE_SECONDS = 300;
 	private static final Logger LOG = LoggerFactory.getLogger(IpAndMaxIdleTimeTokenVerifyingStrategy.class);
 	
-	
+	@Autowired
 	private AuthTokenManager tokenHolder;
 	
+	@Autowired
 	private EncryptionProvider encryptionProvider;
 	
 	private int tokenMaxIdleSeconds = TOKEN_MAX_IDLE_SECONDS;
