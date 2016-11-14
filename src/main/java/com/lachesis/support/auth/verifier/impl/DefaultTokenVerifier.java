@@ -17,6 +17,7 @@ public class DefaultTokenVerifier implements TokenVerifier {
 	@Autowired
 	private TokenVerifyingStrategy tokenVerifyStrategy;
 
+
 	@Override
 	public AuthToken verify(String token, String terminalIpAddress) {
 		if (LOG.isDebugEnabled()) {
