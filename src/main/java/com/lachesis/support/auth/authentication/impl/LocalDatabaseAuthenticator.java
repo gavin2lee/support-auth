@@ -13,7 +13,7 @@ import com.lachesis.support.auth.cache.AuthCacheProvider;
 import com.lachesis.support.auth.data.AuthUserService;
 import com.lachesis.support.auth.model.AuthUser;
 import com.lachesis.support.auth.vo.AuthToken;
-import com.lachesis.support.auth.vo.AuthenticationToken;
+import com.lachesis.support.auth.vo.UsernamePasswordToken;
 import com.lachesis.support.auth.vo.SimpleUserDetails;
 import com.lachesis.support.auth.vo.UserDetails;
 
@@ -29,7 +29,7 @@ public class LocalDatabaseAuthenticator implements Authenticator {
 	private AuthCacheProvider authCacheProvider;
 
 	@Override
-	public UserDetails authenticateWithCredential(AuthenticationToken credential) {
+	public UserDetails authenticateWithCredential(UsernamePasswordToken credential) {
 		if (credential == null) {
 			LOG.error("credential should be specified.");
 			throw new IllegalArgumentException();
