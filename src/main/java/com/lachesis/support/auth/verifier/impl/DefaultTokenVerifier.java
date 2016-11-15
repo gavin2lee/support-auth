@@ -31,7 +31,7 @@ public class DefaultTokenVerifier implements TokenVerifier {
 
 	protected AuthToken doVerify(String token, String terminalIpAddress) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("çoncrete verify strategy is " + this.tokenVerifyStrategy.getClass().getName());
+			LOG.debug("concrete verify strategy is " + this.tokenVerifyStrategy.getClass().getName());
 		}
 
 		return tokenVerifyStrategy.verify(token, terminalIpAddress);
