@@ -111,7 +111,7 @@ public class DesEncrypter implements Encrypter {
 			return null;
 		}
 		
-		String encodedCipherString = Base64.encodeBase64String(cipherBytes);
+		String encodedCipherString = Base64.encodeBase64URLSafeString(cipherBytes);
 		
 		if(LOG.isDebugEnabled()){
 			LOG.debug(String.format("encryption result:%s",encodedCipherString));
