@@ -1,10 +1,10 @@
 package com.lachesis.support.auth.vo;
 
-public class Credential {
+public class AuthenticationToken {
 	private String username;
 	private String password;
 	
-	public Credential(String username,String password){
+	public AuthenticationToken(String username,String password){
 		this.username = username;
 		this.password = password;
 	}

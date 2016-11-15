@@ -12,7 +12,7 @@ import com.lachesis.support.auth.token.AuthTokenManager;
 import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.verifier.TokenVerifier;
 import com.lachesis.support.auth.vo.AuthToken;
-import com.lachesis.support.auth.vo.Credential;
+import com.lachesis.support.auth.vo.AuthenticationToken;
 import com.lachesis.support.auth.vo.UserDetails;
 
 @Service("defaultCentralizedAuthSupporter")
@@ -30,7 +30,7 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 	private AuthCacheProvider authCacheProvider;
 
 	protected String doGenerateToken(String userid, String password, String terminalIpAddress) {
-		Credential credential = new Credential(userid, password);
+		AuthenticationToken credential = new AuthenticationToken(userid, password);
 		UserDetails userDetails = authenticationProvider.getAuthenticator().authenticateWithCredential(credential);
 		if (userDetails == null) {
 			LOG.debug(String.format("failed to authenticate [userid:%s]", userid));
