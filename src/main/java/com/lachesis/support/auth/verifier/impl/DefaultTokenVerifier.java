@@ -19,7 +19,6 @@ public class DefaultTokenVerifier implements TokenVerifier {
 	@Qualifier("maxIdleTimeTokenVerifyingStrategy")
 	private TokenVerifyingStrategy tokenVerifyStrategy;
 
-
 	@Override
 	public AuthToken verify(String token, String terminalIpAddress) {
 		if (LOG.isDebugEnabled()) {

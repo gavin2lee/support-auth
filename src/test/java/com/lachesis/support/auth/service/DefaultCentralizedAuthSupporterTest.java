@@ -72,17 +72,18 @@ public class DefaultCentralizedAuthSupporterTest {
 		String userid = "283";
 		String password = "123";
 		String ip = "10.10.10.10";
+		String ip2 = "100.100.10.10";
 
 		String token = supporter.generateToken(userid, password, ip);
-		
+
 		Assert.assertThat(token, Matchers.notNullValue());
 
-		UserDetails userDetails = supporter.authenticate(token, ip);
+		UserDetails userDetails = supporter.authenticate(token, ip2);
 
 		Assert.assertNotNull("user details should not be null", userDetails);
 
 		supporter.dismissToken(token);
-		UserDetails userDetailsAfterDismiss = supporter.authenticate(token, ip);
+		UserDetails userDetailsAfterDismiss = supporter.authenticate(token, ip2);
 
 		Assert.assertNull("user details should be null after dismission", userDetailsAfterDismiss);
 	}
