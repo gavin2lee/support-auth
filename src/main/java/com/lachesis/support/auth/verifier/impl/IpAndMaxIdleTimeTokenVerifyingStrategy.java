@@ -8,22 +8,14 @@ import org.springframework.stereotype.Service;
 import com.lachesis.support.auth.encryption.EncryptionProvider;
 import com.lachesis.support.auth.token.AuthTokenValueParser;
 import com.lachesis.support.auth.vo.AuthToken;
-import com.lachesis.support.auth.token.AuthTokenManager;
 
 @Service("ipAndMaxIdleTimeTokenVerifyingStrategy")
-public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyingStrategy {
-	public static final int TOKEN_MAX_IDLE_SECONDS = 300;
+public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractMaxIdleTimeTokenVerifyingStrategy {
 	private static final Logger LOG = LoggerFactory.getLogger(IpAndMaxIdleTimeTokenVerifyingStrategy.class);
 	
 	@Autowired
-	private AuthTokenManager tokenHolder;
-	
-	@Autowired
 	private EncryptionProvider encryptionProvider;
-	
-	private int tokenMaxIdleSeconds = TOKEN_MAX_IDLE_SECONDS;
 
-	
 	protected AuthToken doVerify(String token, String terminalIpAddress){
 		String plainTokenValue = encryptionProvider.getEncrypter().decrypt(token);
 		String parsedIp = new AuthTokenValueParser(plainTokenValue).getTerminalIpAddress();
@@ -33,28 +25,7 @@ public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyi
 			return null;
 		}
 		
-		AuthToken authToken = tokenHolder.retrieve(token);
-		
-		if(authToken == null){
-			LOG.debug(String.format("cannot retrieve [token:%s]", token));
-			return null;
-		}
-		
-		if(isExpired(authToken)){
-			LOG.debug(String.format("[token:%s] expired", token));
-			return null;
-		}
-		
-		tokenHolder.updateLastModifiedTime(authToken);
-		return authToken;
+		return super.doVerify(plainTokenValue, terminalIpAddress);
 	}
 	
-	protected boolean isExpired(AuthToken token){
-		long lastModifiedTime = token.getLastModified().getTime();
-		long currentTime = System.currentTimeMillis();
-		
-		long idleTime = (currentTime - lastModifiedTime);
-		return (idleTime > (tokenMaxIdleSeconds * 1000) );
-	}
-
 }
