@@ -7,18 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.lachesis.support.auth.authentication.Authenticator;
 import com.lachesis.support.auth.cache.AuthCache;
 import com.lachesis.support.auth.cache.AuthCacheProvider;
 import com.lachesis.support.auth.data.AuthUserService;
 import com.lachesis.support.auth.model.AuthUser;
 import com.lachesis.support.auth.vo.AuthToken;
-import com.lachesis.support.auth.vo.UsernamePasswordToken;
 import com.lachesis.support.auth.vo.SimpleUserDetails;
 import com.lachesis.support.auth.vo.UserDetails;
 
 @Service("localDatabaseAuthenticator")
-public class LocalDatabaseAuthenticator implements Authenticator {
+public class LocalDatabaseAuthenticator extends AbstractAuthenticator {
 	private static final Logger LOG = LoggerFactory.getLogger(LocalDatabaseAuthenticator.class);
 
 	@Autowired
@@ -27,33 +25,6 @@ public class LocalDatabaseAuthenticator implements Authenticator {
 
 	@Autowired
 	private AuthCacheProvider authCacheProvider;
-
-	@Override
-	public UserDetails authenticateWithCredential(UsernamePasswordToken credential) {
-		if (credential == null) {
-			LOG.error("credential should be specified.");
-			throw new IllegalArgumentException();
-		}
-
-		String userid = credential.getUsername();
-		String password = credential.getPassword();
-
-		if (StringUtils.isBlank(userid) || StringUtils.isBlank(password)) {
-			LOG.error("invalid credential");
-			throw new IllegalArgumentException();
-		}
-
-		return doAuthenticateWithCredential(userid, password);
-	}
-
-	@Override
-	public UserDetails authenticateWithAuthToken(AuthToken token) {
-		if (token == null) {
-			return null;
-		}
-
-		return doAuthenticateWithAuthToken(token);
-	}
 
 	protected UserDetails doAuthenticateWithAuthToken(AuthToken token) {
 		UserDetails userDetailsToReturn = null;
