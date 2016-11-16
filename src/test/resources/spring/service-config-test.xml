@@ -15,8 +15,15 @@
      http://mybatis.org/schema/mybatis-spring.xsd
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context.xsd">
-	<import resource="datasource-config.xml"/>
+	<import resource="datasource-config-test.xml"/>
 	<import resource="repository-config.xml"/>
 	<import resource="ehcache-config.xml"/>
 	<import resource="service-config.xml"/>
+	
+	<!--
+		
+<bean id="dao1"  class="org.mockito.Mockito" factory-method="mock"> 
+           <constructor-arg value="DaoInterface"></constructor-arg> 
+</bean> 
+	 -->
 </beans>

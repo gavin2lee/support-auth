@@ -30,9 +30,6 @@
 		<property name="url" value="jdbc:hsqldb:mem:dbname" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
-		<property name="validationQuery">
-			<value>SELECT 1</value>
-		</property>
 		<property name="defaultAutoCommit" value="false" />
 	</bean>
 </beans>

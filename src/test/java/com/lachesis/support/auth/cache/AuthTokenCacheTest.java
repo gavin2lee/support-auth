@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,7 +15,6 @@ import com.lachesis.support.auth.vo.Authority;
 import com.lachesis.support.auth.vo.SimpleUserDetails;
 import com.lachesis.support.auth.vo.UserDetails;
 
-import junit.framework.Assert;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;

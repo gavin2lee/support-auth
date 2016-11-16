@@ -21,7 +21,7 @@ import com.lachesis.support.auth.model.AuthUser;
 import com.lachesis.support.auth.vo.UserDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/support-public-config.xml" })
+@ContextConfiguration(locations = { "classpath:spring/service-config-test.xml" })
 public class DefaultCentralizedAuthSupporterTest {
 
 	@InjectMocks
