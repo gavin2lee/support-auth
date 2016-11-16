@@ -17,7 +17,7 @@
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
 			<list>
-				<value>file:${user.home}/support-auth-data-access.properties</value>
+				<value>classpath*:project-support-auth-config/support-auth-data-access.properties</value>
 				<!-- 
 				<value>classpath*:mnisqm_remote.properties</value>
 				 -->
