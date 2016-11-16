@@ -17,6 +17,7 @@ public abstract class AbstractTokenVerifyingStrategy implements TokenVerifyingSt
 		
 		if(StringUtils.isBlank(token) || StringUtils.isBlank(terminalIpAddress)){
 			LOG.error(String.format("[token:%s,ip:%s] is invalid.", token, terminalIpAddress));
+			return null;
 		}
 		return doVerify(token, terminalIpAddress);
 	}

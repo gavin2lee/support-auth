@@ -12,16 +12,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.lachesis.support.auth.annotation.SupportTestContext;
 import com.lachesis.support.auth.authentication.Authenticator;
 import com.lachesis.support.auth.data.AuthUserService;
 import com.lachesis.support.auth.model.AuthUser;
 import com.lachesis.support.auth.vo.UserDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/service-config-test.xml" })
+@SupportTestContext
 public class DefaultCentralizedAuthSupporterTest {
 
 	@InjectMocks

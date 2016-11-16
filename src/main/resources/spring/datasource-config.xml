@@ -11,25 +11,15 @@
 		http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context.xsd">
-	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations">
-			<list>
-				<value>file:${user.home}/project-support-auth-config/support-auth-data-access.properties</value>
-				<!-- 
-				<value>classpath*:mnisqm_remote.properties</value>
-				 -->
-			</list>
-		</property>
-	</bean>
+	
+	<context:property-placeholder
+		location="file:${user.home}/project-support-auth-config/support-auth-data-access.properties" ignore-unresolvable="true"/>
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${db.driverClassName}" />
-		<property name="url" value="${db.url}" />
-		<property name="username" value="${db.username}" />
-		<property name="password" value="${db.password}" />
+		<property name="driverClassName" value="${support.auth.data.access.driver.classname}" />
+		<property name="url" value="${support.auth.data.access.db.url}" />
+		<property name="username" value="${support.auth.data.access.db.username}" />
+		<property name="password" value="${support.auth.data.access.db.password}" />
 		<property name="validationQuery">
 			<value>SELECT 1</value>
 		</property>

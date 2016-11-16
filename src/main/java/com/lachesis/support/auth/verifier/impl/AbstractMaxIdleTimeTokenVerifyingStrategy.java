@@ -3,6 +3,7 @@ package com.lachesis.support.auth.verifier.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.lachesis.support.auth.common.AuthConstants;
 import com.lachesis.support.auth.token.AuthTokenManager;
@@ -10,6 +11,8 @@ import com.lachesis.support.auth.vo.AuthToken;
 
 public abstract class AbstractMaxIdleTimeTokenVerifyingStrategy extends AbstractTokenVerifyingStrategy{
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractMaxIdleTimeTokenVerifyingStrategy.class);
+	
+	@Value("${support.auth.verifier.max.idle.time.seconds}")
 	private int tokenMaxIdleSeconds = AuthConstants.TOKEN_MAX_IDLE_SECONDS;
 
 	@Autowired

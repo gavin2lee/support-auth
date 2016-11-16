@@ -63,7 +63,7 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 	protected UserDetails doAuthenticate(String token, String terminalIpAddress){
 		AuthToken authToken = tokenVerifier.verify(token, terminalIpAddress);
 		if(authToken == null){
-			LOG.warn(String.format("token [%s] is invalid", token));
+			LOG.warn(String.format("token [%s] is invalid or expired", token));
 			return null;
 		}
 		
