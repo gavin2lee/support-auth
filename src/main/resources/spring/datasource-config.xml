@@ -16,7 +16,7 @@
 		location="file:${user.home}/project-support-auth-config/support-auth-data-access.properties" ignore-unresolvable="true"/>
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${support.auth.data.access.driver.classname}" />
+		<property name="driverClassName" value="${support.auth.data.access.db.driver.classname}" />
 		<property name="url" value="${support.auth.data.access.db.url}" />
 		<property name="username" value="${support.auth.data.access.db.username}" />
 		<property name="password" value="${support.auth.data.access.db.password}" />
