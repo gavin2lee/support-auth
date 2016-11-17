@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lachesis.support.auth.authentication.AuthenticatorProvider;
 import com.lachesis.support.auth.authorization.AuthorizerProvider;
 import com.lachesis.support.auth.cache.AuthCacheProvider;
-import com.lachesis.support.auth.encryption.EncryptionProvider;
+import com.lachesis.support.auth.encryption.EncrypterProvider;
 import com.lachesis.support.auth.token.AuthTokenManager;
 import com.lachesis.support.auth.token.AuthTokenValueAssembler;
 import com.lachesis.support.auth.verifier.TokenVerifier;
@@ -25,7 +25,7 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 	@Autowired
 	private AuthorizerProvider authorizerProvider;
 	@Autowired
-	private EncryptionProvider encryptionProvider;
+	private EncrypterProvider encryptionProvider;
 	@Autowired
 	private AuthTokenManager tokenManager;
 	@Autowired
@@ -46,10 +46,10 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 
 		AuthToken token = assembleAuthToken(userid, password, terminalIpAddress, tokenValue);
 		tokenManager.store(token);
-		
+
 		return tokenValue;
 	}
-	
+
 	private AuthToken assembleAuthToken(String userid, String password, String terminalIpAddress, String tokenValue) {
 		return (new AuthTokenGenerator(userid, password, terminalIpAddress, tokenValue).generate());
 	}
@@ -57,33 +57,37 @@ public class DefaultCentralizedAuthSupporter extends AbstractCentralizedAuthSupp
 	private String assemblePlainTokenValue(UserDetails userDetails, String terminalIpAddress) {
 		return (new AuthTokenValueAssembler(userDetails.getUserid(), terminalIpAddress).buildTokenValue());
 	}
-	
-	protected AuthorizationResult doAuthorize(String token, String terminalIpAddress){
+
+	protected AuthorizationResult doAuthorize(String token, String terminalIpAddress) {
 		AuthToken authToken = tokenVerifier.verify(token, terminalIpAddress);
-		if(authToken == null){
+		if (authToken == null) {
 			LOG.warn(String.format("token [%s] is invalid or expired", token));
 			return null;
 		}
-		
+
 		AuthorizationResult authResult = findAuthorizationResultFromCache(authToken);
-		
-		if(authResult != null){
+
+		if (authResult != null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(String.format("find authorization result from cache [token:%s,ip:%s]", token,
+						terminalIpAddress));
+			}
 			return authResult;
 		}
-		
+
 		authResult = authorizerProvider.getAuthorizer().authorize(authToken);
-		if(authResult == null){
-			LOG.warn(String.format("authorizing failed for [token:%s,ip:%s]", token,terminalIpAddress));
+		if (authResult == null) {
+			LOG.warn(String.format("authorizing failed for [token:%s,ip:%s]", token, terminalIpAddress));
 			return null;
 		}
 		return authResult;
 	}
-	
-	protected void cacheAuthorizationResult(AuthToken token, AuthorizationResult authorizationResult){
+
+	protected void cacheAuthorizationResult(AuthToken token, AuthorizationResult authorizationResult) {
 		authCacheProvider.getAuthorizationResultCache().put(token.getTokenValue(), authorizationResult);
 	}
-	
-	protected AuthorizationResult findAuthorizationResultFromCache(AuthToken token){
+
+	protected AuthorizationResult findAuthorizationResultFromCache(AuthToken token) {
 		return (AuthorizationResult) authCacheProvider.getAuthorizationResultCache().get(token.getTokenValue());
 	}
 

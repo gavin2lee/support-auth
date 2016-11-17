@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lachesis.support.auth.encryption.EncryptionProvider;
+import com.lachesis.support.auth.encryption.EncrypterProvider;
 import com.lachesis.support.auth.token.AuthTokenValueParser;
 import com.lachesis.support.auth.vo.AuthToken;
 
@@ -14,7 +14,7 @@ public class IpAndMaxIdleTimeTokenVerifyingStrategy extends AbstractMaxIdleTimeT
 	private static final Logger LOG = LoggerFactory.getLogger(IpAndMaxIdleTimeTokenVerifyingStrategy.class);
 	
 	@Autowired
-	private EncryptionProvider encryptionProvider;
+	private EncrypterProvider encryptionProvider;
 
 	protected AuthToken doVerify(String token, String terminalIpAddress){
 		String plainTokenValue = encryptionProvider.getEncrypter().decrypt(token);

@@ -1,5 +1,5 @@
 package com.lachesis.support.auth.encryption;
 
-public interface EncryptionProvider {
+public interface EncrypterProvider {
 	Encrypter getEncrypter();
 }

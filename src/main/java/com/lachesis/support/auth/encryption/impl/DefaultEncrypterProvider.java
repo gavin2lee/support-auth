@@ -3,10 +3,10 @@ package com.lachesis.support.auth.encryption.impl;
 import org.springframework.stereotype.Service;
 
 import com.lachesis.support.auth.encryption.Encrypter;
-import com.lachesis.support.auth.encryption.EncryptionProvider;
+import com.lachesis.support.auth.encryption.EncrypterProvider;
 
-@Service("defaultEncryptionProvider")
-public class DefaultEncryptionProvider implements EncryptionProvider {
+@Service("defaultEncrypterProvider")
+public class DefaultEncrypterProvider implements EncrypterProvider {
 
 	private Encrypter encrypter = new DesEncrypter();
 	
