@@ -19,11 +19,4 @@
 	<import resource="repository-config.xml"/>
 	<import resource="ehcache-config.xml"/>
 	<import resource="service-config.xml"/>
-	
-	<!--
-		
-<bean id="dao1"  class="org.mockito.Mockito" factory-method="mock"> 
-           <constructor-arg value="DaoInterface"></constructor-arg> 
-</bean> 
-	 -->
 </beans>
