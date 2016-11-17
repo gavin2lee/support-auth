@@ -27,8 +27,8 @@
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
-	<bean id="userDetailsCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
-		<property name="cacheName" value="userDetailsCache" />
+	<bean id="authorizationResultCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheName" value="authorizationResultCache" />
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 </beans>

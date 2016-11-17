@@ -5,12 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lachesis.support.auth.service.CentralizedAuthSupporter;
-import com.lachesis.support.auth.vo.UserDetails;
+import com.lachesis.support.auth.vo.AuthorizationResult;
 
 public abstract class AbstractCentralizedAuthSupporter implements CentralizedAuthSupporter {
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractCentralizedAuthSupporter.class);
 
-	public String generateToken(String userid, String password, String terminalIpAddress) {
+	public String authenticate(String userid, String password, String terminalIpAddress) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(String.format("generating token for [userid:%s,ip:%s]", userid, terminalIpAddress));
 		}
@@ -23,10 +23,10 @@ public abstract class AbstractCentralizedAuthSupporter implements CentralizedAut
 			throw new RuntimeException("generating token failed");
 		}
 
-		return doGenerateToken(userid, password, terminalIpAddress);
+		return doAuthenticate(userid, password, terminalIpAddress);
 	}
 
-	public UserDetails authenticate(String token, String terminalIpAddress) {
+	public AuthorizationResult authorize(String token, String terminalIpAddress) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(String.format("authenticating token for [token:%s,ip:%s]", token, terminalIpAddress));
 		}
@@ -36,11 +36,11 @@ public abstract class AbstractCentralizedAuthSupporter implements CentralizedAut
 			return null;
 		}
 
-		return doAuthenticate(token, terminalIpAddress);
+		return doAuthorize(token, terminalIpAddress);
 	}
 
 	@Override
-	public void dismissToken(String token) {
+	public void logout(String token) {
 		if (LOG.isInfoEnabled()) {
 			LOG.info(String.format("dismissing token:%s", token));
 		}
@@ -49,7 +49,7 @@ public abstract class AbstractCentralizedAuthSupporter implements CentralizedAut
 			return;
 		}
 
-		doDismissToken(token);
+		doLogout(token);
 
 	}
 	
@@ -57,9 +57,9 @@ public abstract class AbstractCentralizedAuthSupporter implements CentralizedAut
 		return StringUtils.isBlank(s);
 	}
 
-	protected abstract String doGenerateToken(String userid, String password, String terminalIpAddress);
+	protected abstract String doAuthenticate(String userid, String password, String terminalIpAddress);
 
-	protected abstract UserDetails doAuthenticate(String token, String terminalIpAddress);
+	protected abstract AuthorizationResult doAuthorize(String token, String terminalIpAddress);
 	
-	protected abstract void doDismissToken(String token);
+	protected abstract void doLogout(String token);
 }

@@ -11,8 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.lachesis.support.auth.vo.AuthToken;
-import com.lachesis.support.auth.vo.Authority;
-import com.lachesis.support.auth.vo.SimpleUserDetails;
+import com.lachesis.support.auth.vo.SimpleAuthorizationResult;
 import com.lachesis.support.auth.vo.UserDetails;
 
 import net.sf.ehcache.Cache;
@@ -107,16 +106,15 @@ public class AuthTokenCacheTest {
 		UserDetails userDetailsFromCache = (UserDetails) userDetailsCache.get(token.getTokenValue()).getObjectValue();
 
 		Assert.assertNotNull("check if user details from cahce is null", userDetailsFromCache);
-		Assert.assertEquals("check the password of user details", "123456", ((SimpleUserDetails)userDetailsFromCache).getPassword());
+		Assert.assertEquals("check the password of user details", "123456", ((SimpleAuthorizationResult)userDetailsFromCache).getPassword());
 	}
 
 	private UserDetails mockUserDetails() {
 		long seq = userDetailsSequence.getAndIncrement();
 		String userid = "test-" + seq;
 		String password = "123456";
-		List<Authority> authorities = null;
 
-		return new SimpleUserDetails(String.valueOf(seq), userid, password, authorities);
+		return new SimpleAuthorizationResult(String.valueOf(seq), userid, password);
 	}
 
 	private AuthToken mockAuthToken() {

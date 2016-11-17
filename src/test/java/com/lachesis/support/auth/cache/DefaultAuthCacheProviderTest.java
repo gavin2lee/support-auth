@@ -27,8 +27,8 @@ public class DefaultAuthCacheProviderTest {
 	}
 
 	@Test
-	public void testGetUserDetailsCache() {
-		Assert.assertNotNull("check user details cache", provider.getUserDetailsCache());
+	public void testGetAuthorizationResultCache() {
+		Assert.assertNotNull("check user details cache", provider.getAuthorizationResultCache());
 	}
 
 }

@@ -47,7 +47,7 @@ public class DefaultCentralizedAuthSupporterTest {
 		String password = "123";
 		String ip = "10.10.10.10";
 
-		String token = supporter.generateToken(userid, password, ip);
+		String token = supporter.authenticate(userid, password, ip);
 
 		Assert.assertNotNull("token should not be null", token);
 	}
@@ -58,11 +58,11 @@ public class DefaultCentralizedAuthSupporterTest {
 		String password = "123";
 		String ip = "10.10.10.10";
 
-		String token = supporter.generateToken(userid, password, ip);
+		String token = supporter.authenticate(userid, password, ip);
 		
 		Assert.assertThat(token, Matchers.notNullValue());
 
-		UserDetails userDetails = supporter.authenticate(token, ip);
+		UserDetails userDetails = supporter.authorize(token, ip);
 
 		Assert.assertNotNull("user details should not be null", userDetails);
 	}
@@ -74,16 +74,16 @@ public class DefaultCentralizedAuthSupporterTest {
 		String ip = "10.10.10.10";
 		String ip2 = "100.100.10.10";
 
-		String token = supporter.generateToken(userid, password, ip);
+		String token = supporter.authenticate(userid, password, ip);
 
 		Assert.assertThat(token, Matchers.notNullValue());
 
-		UserDetails userDetails = supporter.authenticate(token, ip2);
+		UserDetails userDetails = supporter.authorize(token, ip2);
 
 		Assert.assertNotNull("user details should not be null", userDetails);
 
-		supporter.dismissToken(token);
-		UserDetails userDetailsAfterDismiss = supporter.authenticate(token, ip2);
+		supporter.logout(token);
+		UserDetails userDetailsAfterDismiss = supporter.authorize(token, ip2);
 
 		Assert.assertNull("user details should be null after dismission", userDetailsAfterDismiss);
 	}

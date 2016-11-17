@@ -1,9 +1,9 @@
 package com.lachesis.support.auth.service;
 
-import com.lachesis.support.auth.vo.UserDetails;
+import com.lachesis.support.auth.vo.AuthorizationResult;
 
 public interface CentralizedAuthSupporter {
-	String generateToken(String userid, String password, String terminalIpAddress);
-	UserDetails authenticate(String token, String terminalIpAddress);
-	void dismissToken(String token);
+	String authenticate(String userid, String password, String terminalIpAddress);
+	AuthorizationResult authorize(String token, String terminalIpAddress);
+	void logout(String token);
 }

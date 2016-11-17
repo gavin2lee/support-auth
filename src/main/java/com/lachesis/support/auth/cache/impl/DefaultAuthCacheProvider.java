@@ -19,12 +19,12 @@ public class DefaultAuthCacheProvider implements AuthCacheProvider {
 	private Cache authTokenEhcache;
 	
 	@Autowired
-	@Qualifier("userDetailsCache")
-	private Cache userDetailsEhcache;
+	@Qualifier("authorizationResultCache")
+	private Cache authorizationResultEhcache;
 	
 	private EhcacheBasedAuthCache authTokenCache;
 	
-	private EhcacheBasedAuthCache userDetailsCache;
+	private EhcacheBasedAuthCache authorizationResultCache;
 	
 	@PostConstruct
 	public void PostConstruct(){
@@ -37,8 +37,8 @@ public class DefaultAuthCacheProvider implements AuthCacheProvider {
 	}
 
 	@Override
-	public AuthCache getUserDetailsCache() {
-		return userDetailsCache;
+	public AuthCache getAuthorizationResultCache() {
+		return authorizationResultCache;
 	}
 	
 	private void init(){
@@ -46,12 +46,12 @@ public class DefaultAuthCacheProvider implements AuthCacheProvider {
 			throw new RuntimeException();
 		}
 		
-		if(userDetailsEhcache == null){
+		if(authorizationResultEhcache == null){
 			throw new RuntimeException();
 		}
 		
 		authTokenCache = new EhcacheBasedAuthCache(authTokenEhcache);
-		userDetailsCache = new EhcacheBasedAuthCache(userDetailsEhcache);
+		authorizationResultCache = new EhcacheBasedAuthCache(authorizationResultEhcache);
 	}
 
 }

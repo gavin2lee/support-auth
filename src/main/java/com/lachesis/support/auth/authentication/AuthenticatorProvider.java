@@ -1,5 +1,5 @@
 package com.lachesis.support.auth.authentication;
 
-public interface AuthenticationProvider {
+public interface AuthenticatorProvider {
 	Authenticator getAuthenticator();
 }

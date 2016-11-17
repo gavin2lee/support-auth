@@ -5,14 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lachesis.support.auth.authentication.Authenticator;
-import com.lachesis.support.auth.vo.AuthToken;
 import com.lachesis.support.auth.vo.UserDetails;
 import com.lachesis.support.auth.vo.UsernamePasswordToken;
 
 public abstract class AbstractAuthenticator implements Authenticator {
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractAuthenticator.class);
 	@Override
-	public UserDetails authenticateWithCredential(UsernamePasswordToken credential) {
+	public UserDetails authenticate(UsernamePasswordToken credential) {
 		if (credential == null) {
 			LOG.error("credential should be specified.");
 			throw new IllegalArgumentException();
@@ -26,18 +25,8 @@ public abstract class AbstractAuthenticator implements Authenticator {
 			throw new IllegalArgumentException();
 		}
 
-		return doAuthenticateWithCredential(userid, password);
+		return doAuthenticate(userid, password);
 	}
 
-	@Override
-	public UserDetails authenticateWithAuthToken(AuthToken token) {
-		if (token == null) {
-			return null;
-		}
-
-		return doAuthenticateWithAuthToken(token);
-	}
-
-	protected abstract UserDetails doAuthenticateWithCredential(String userid, String password);
-	protected abstract UserDetails doAuthenticateWithAuthToken(AuthToken token);
+	protected abstract UserDetails doAuthenticate(String userid, String password);
 }
