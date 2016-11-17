@@ -11,8 +11,8 @@ import com.lachesis.support.auth.authorization.AuthorizerProvider;
 import com.lachesis.support.auth.authentication.Authenticator;
 
 @Service("defaultAuthenticationProvider")
-public class LocalDatabaseAuthProvider implements AuthenticatorProvider, AuthorizerProvider {
-	private static final Logger LOG = LoggerFactory.getLogger(LocalDatabaseAuthProvider.class);
+public class LocalDatabaseCompositeAuthProvider implements AuthenticatorProvider, AuthorizerProvider {
+	private static final Logger LOG = LoggerFactory.getLogger(LocalDatabaseCompositeAuthProvider.class);
 
 	@Autowired
 	private Authenticator authenticator;
